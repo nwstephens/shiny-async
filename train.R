@@ -12,7 +12,7 @@ trainModel <- function(df, outcome) {
   training <- df[ inTraining,]
   testing  <- df[-inTraining,]
   
-  fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 10)
+  fitControl <- trainControl(method = "repeatedcv", number = 5, repeats = 5)
   
   set.seed(825)
   form <- eval(substitute(y ~ ., list(y = as.symbol(outcome))))
@@ -21,6 +21,6 @@ trainModel <- function(df, outcome) {
   gbmFit1
 }
 
-# library(mlbench)
-# data(Sonar)
-# trainModel(Sonar, "Class")
+library(mlbench)
+data(Sonar)
+trainModel(Sonar, "Class")

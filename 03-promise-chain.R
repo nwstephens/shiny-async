@@ -1,30 +1,21 @@
+library(dplyr)
+library(DBI)
+library(promises)
 library(future)
 plan(multiprocess)
-library(promises)
-library(dplyr)
 
+con <- dbConnect(odbc::odbc(), "SQL Server (DSN)")
 query_db <- function() {
-  Sys.sleep(5)
-  mtcars
+  tbl(con, "flights") %>%
+    collect
 }
+
 
 # Synchronous
 query_db() %>%
-  filter(cyl > 4) %>%
+  filter(carrier == "UA") %>%
   head(10) %>%
   View()
-
-NULL
-
-
-
-
-
-
-
-
-
-
 
 
 # Asynchronous
